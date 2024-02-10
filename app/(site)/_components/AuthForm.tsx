@@ -7,6 +7,9 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import AuthSocialButton from "./AuthSocialButton";
 import { BsGithub } from "react-icons/bs";
 import { FaGoogle } from "react-icons/fa";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 type variant = "LOGIN" | "REGISTER";
 
@@ -35,17 +38,37 @@ const AuthForm = () => {
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         startTranstion(() => {
             if(variant === "REGISTER") {
-                // Register api
+                axios.post("/api/register", data)
+                .catch(() => toast.error("Something went wrong"))
                 }
             else {
-                // LOGIN API
+                signIn("credentials", {...data, redirect: false})
+                .then((callback) => {
+                    if(callback?.error) {
+                        toast.error("Invalid credentials");
+                    }
+                    if(callback?.ok) {
+                        toast.success("Success to register");
+                    }
+                })
             }
         });
     }
 
     const socialAction = (action: string) => {
         startTransition(() => {
-            // NEXT AUTHENTICATION SIGNIN action
+            signIn(action, { redirect: false })
+            .then((callback) => {
+                if(callback) {
+                    if (callback?.error) {
+                        toast.error(`Oops! something went wrong`);
+                    }
+
+                    if (callback?.ok) {
+                        toast.success("Logged in successfully!");
+                    }
+                }
+            })
         });
     }
     return (
@@ -95,8 +118,8 @@ const AuthForm = () => {
                         </div>
                     </div>
                     <div className="mt-6 flex gap-2">
-                        <AuthSocialButton Icon={BsGithub} onClick={() => socialAction("")}/>
-                        <AuthSocialButton Icon={FaGoogle} onClick={() => socialAction("")} />
+                        <AuthSocialButton Icon={BsGithub} onClick={() => socialAction("github")}/>
+                        <AuthSocialButton Icon={FaGoogle} onClick={() => socialAction("google")} />
                     </div>
                 </div>
                 <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
