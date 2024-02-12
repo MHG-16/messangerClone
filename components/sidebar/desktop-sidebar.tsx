@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import useRoutes from "@/hooks/useRoutes";
 import DesktopItem from "./desktop-item";
 import { User } from "@prisma/client";
-import Avatar from "../Avatar";
+import Avatar, { AvatarSkeleton } from "../Avatar";
 
 interface DesktopSidebarProps {
   currentUser: User
@@ -41,7 +41,9 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
             onClick={() => setIsOpen(true)}
             className="cursor-pointer hover:opacity-75 transition"
           >
-            <Avatar user={currentUser}/>
+            <Suspense fallback={<AvatarSkeleton />}>
+              <Avatar user={currentUser}/>
+            </Suspense>
           </div>
       </nav>
     </div>
