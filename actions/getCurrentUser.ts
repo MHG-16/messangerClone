@@ -8,7 +8,7 @@ const getCurrentUser = async () => {
         const session = await getSession();
         if (!session?.user?.email) return null; // Not logged in
 
-        const currentUser = await prisma?.user.findUnique( {
+        const currentUser = await db.user.findUnique( {
             where: {
                 email: session.user.email as string
             }
@@ -21,3 +21,5 @@ const getCurrentUser = async () => {
         return null;
     }
 }
+
+export default getCurrentUser
