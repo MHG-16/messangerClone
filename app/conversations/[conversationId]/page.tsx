@@ -3,6 +3,8 @@ import getMessages from "@/actions/getMessages";
 import EmptyState from "@/components/emptyState";
 import { Suspense } from "react";
 import Header from "./components/Header";
+import Body from "./components/Body";
+import Form from "./components/Form";
 
 interface IParams {
   conversationId: string;
@@ -28,6 +30,8 @@ const ConversationPage = async ({ params }: { params : IParams}) => {
         <Suspense>
           <Header conversation={conversation}/>
         </Suspense>
+        <Body />
+        <Form />
       </div>
     </div>
   )
