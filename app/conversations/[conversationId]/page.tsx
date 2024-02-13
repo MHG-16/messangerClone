@@ -29,8 +29,8 @@ const ConversationPage = async ({ params }: { params : IParams}) => {
       <div className="h-full flex flex-col">
         <Suspense>
           <Header conversation={conversation}/>
+          <Body initialMessages={messages} />
         </Suspense>
-        <Body />
         <Form />
       </div>
     </div>
