@@ -1,5 +1,7 @@
 import Modal from "@/components/Modal";
+import Button from "@/components/button";
 import Input from "@/components/input";
+import Select from "@/components/input/Select";
 import { User } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -55,7 +57,7 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
     <Modal isOpen={isOpen} onClose={onClose}>
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-12">
-                <div className="border-b bg-gray-900/10 pb-12">
+                <div className="border-b  pb-12">
                     <h3 className="text-base font-semibold leading-7 text-gray-900">
                         Create a new chat group
                     </h3>
@@ -78,6 +80,14 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
                         />
                     </div>
                 </div>
+            </div>
+            <div className="mt-6 flex items-center justify-between">
+                <Button disabled={isLoading} onClick={onClose} type="button" secondary>
+                    Cancel
+                </Button>
+                <Button disabled={isLoading} type="submit">
+                    Create
+                </Button>
             </div>
         </form>
     </Modal>
