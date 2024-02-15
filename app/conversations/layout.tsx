@@ -1,7 +1,8 @@
 import Sidebar from "@/components/sidebar";
-import ConversationList from "./components/ConversationList";
+import ConversationList, { ConversationListSkeleton } from "./components/ConversationList";
 import getConversations from "@/actions/getConversations";
 import getUsers from "@/actions/getUsers";
+import { Suspense } from "react";
 
 export default async function ConversationLayout({
     children
@@ -13,10 +14,12 @@ export default async function ConversationLayout({
     return (
         <Sidebar>
             <div className="h-full">
-                <ConversationList
-                    users={users} 
-                    initialItems={conversations}
-                />
+                <Suspense fallback={<ConversationListSkeleton />}>
+                    <ConversationList
+                        users={users}
+                        initialItems={conversations}
+                    />
+                </Suspense>
                 {children}
             </div>
         </Sidebar>

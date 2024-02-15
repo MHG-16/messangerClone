@@ -4,10 +4,11 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from "date-fns";
 
-import Avatar from "@/components/Avatar";
+import Avatar, { AvatarSkeleton } from "@/components/Avatar";
 import useOtherUser from "@/hooks/useOtherUser";
 import { FullConversationType } from "@/types"
 import AvatarGroup from "@/components/AvatarGroup";
+import { Skeleton } from "@/components/ui/skeleton";
 
 
 interface ConversationBoxProps {
@@ -99,6 +100,21 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         </div>
     </div>
   )
+}
+
+export const ConversationBoxSkeleton = () => {
+    return (
+        <div className="w-full relative flex items-center p-3 space-x-3 hover:bg-neutral-100 rounded-lg transition cursor-pointer bg-white">
+            <AvatarSkeleton />
+            <div className="flex-1 min-w-0">
+                <div className="flex justify-between items-center mb-1">
+                    <Skeleton className="w-32 h-4 bg-stone-400" />
+                    <Skeleton className="w-16 h-4 bg-stone-400" />
+                </div>
+                <Skeleton className="w-full h-8 bg-stone-400" />
+            </div>
+        </div>
+    )
 }
 
 export default ConversationBox
