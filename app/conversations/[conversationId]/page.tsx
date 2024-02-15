@@ -2,8 +2,8 @@ import getConversationById from "@/actions/getConversationById";
 import getMessages from "@/actions/getMessages";
 import EmptyState from "@/components/emptyState";
 import { Suspense } from "react";
-import Header from "./components/Header";
-import Body from "./components/Body";
+import Header, { HeaderSkeleton } from "./components/Header";
+import Body, { BodySkeleton } from "./components/Body";
 import Form from "./components/Form";
 
 interface IParams {
@@ -27,11 +27,11 @@ const ConversationPage = async ({ params }: { params : IParams}) => {
   return (
     <div className="lg:pl-80 h-full">
       <div className="h-full flex flex-col">
-        <Suspense>
+        <Suspense fallback={<div><HeaderSkeleton /><BodySkeleton /></div>}>
           <Header conversation={conversation}/>
           <Body initialMessages={messages} />
+          <Form />
         </Suspense>
-        <Form />
       </div>
     </div>
   )

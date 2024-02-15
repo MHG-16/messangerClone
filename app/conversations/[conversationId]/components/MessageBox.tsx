@@ -1,4 +1,4 @@
-import Avatar from "@/components/Avatar";
+import Avatar, { AvatarSkeleton } from "@/components/Avatar";
 import { FullMessageType } from "@/types";
 import clsx from "clsx";
 import { format } from "date-fns";
@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 import ImageModal from "./ImageModal";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface MessageBoxProps {
     data: FullMessageType;
@@ -84,6 +85,29 @@ const MessageBox: React.FC<MessageBoxProps> = ({
         </div>
     </div>
   )
+}
+
+export const MessageBoxSkeleton = () => {
+    return (
+        <div>
+            <div className="flex gap-3 p-4">
+                <AvatarSkeleton />
+                <div className="flex flex-col gap-2">
+                    <Skeleton className="w-12 h-2 bg-slate-400"/>
+                    <Skeleton className="w-24 h-8 bg-slate-400"/>
+                </div>
+            </div>
+            <div className="flex gap-3 p-4 justify-end">
+                <div className="order-2">
+                    <AvatarSkeleton />
+                </div>
+                <div className="flex flex-col gap-2 items-end">
+                    <Skeleton className="w-12 h-2 bg-slate-400"/>
+                    <Skeleton className="w-24 h-8 bg-slate-400"/>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default MessageBox
