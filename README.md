@@ -41,7 +41,7 @@ Whether you're an experienced developer looking to expand your skillset or a beg
 ### Cloning the repository
 
 ```shell
-git clone https://github.com/AntonioErdeljac/next13-messenger.git
+git clone https://github.com/MHG-16/messangerClone.git
 ```
 
 ### Install packages
