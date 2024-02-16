@@ -13,14 +13,14 @@ const UserBox: React.FC<UserBoxProps> = ({
     data
 }) => {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+  const [_, startTransition] = useTransition();
 
   const handleClick = useCallback(() => {
     startTransition(() => {
         axios.post("/api/conversations", {
             userId: data.id
         })
-        .then(() => router.push(`/conversations/${data.id}`))
+        .then((data) => router.push(`/conversations/${data.data.id}`))
     })
   }, [data.id, router])
   return (
