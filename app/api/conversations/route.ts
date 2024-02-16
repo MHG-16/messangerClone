@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 // Import the database connection object
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
 
 // Define the async POST request handler for the conversation creation endpoint
 export async function POST(request: Request) {
@@ -55,6 +56,12 @@ export async function POST(request: Request) {
         },
       });
 
+      newConversation.users.forEach((user) => {
+        if (user.email) {
+            pusherServer.trigger(user.email, "conversation:new", newConversation)
+        }
+      })
+
       return NextResponse.json(newConversation); // Return the newly created conversation
     }
 
@@ -104,6 +111,12 @@ export async function POST(request: Request) {
         users: true, // Include the users in the conversation in the response
       },
     });
+
+    newConversation.users.map((user) => {
+      if (user.email) {
+        pusherServer.trigger(user.email, "conversation:new", newConversation)
+      }
+    })
 
     return NextResponse.json(newConversation); // Return the newly created conversation
   } catch (error: any) {

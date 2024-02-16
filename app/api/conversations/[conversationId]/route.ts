@@ -1,5 +1,6 @@
 import getCurrentUser from "@/actions/getCurrentUser";
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
 import { NextResponse } from "next/server";
 
 interface IParams {
@@ -40,7 +41,13 @@ export async function DELETE (
             }
         });
 
-        return new NextResponse("Deleted conversation", { status: 200});
+        existingConversation.users.forEach((user) => {
+            if(user.email) {
+                pusherServer.trigger(user.email, "conversation:remove", existingConversation)
+            }
+        });
+
+        return NextResponse.json(deletedConversation);
     } catch (error: any) {
         console.error(error, "Error_CONVERSATION_DELETE");
     return new NextResponse("Internal Server Error", { status: 500 });
