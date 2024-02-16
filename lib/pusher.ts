@@ -1,8 +1,6 @@
 import PusherServer from "pusher";
 import PusherClient from "pusher-js";
 
-console.log(process.env.NEXT_PUBLIC_PUSHER_KEY)
-
 export const pusherServer = new PusherServer({
     appId: process.env.NEXT_PUBLIC_PUSHER_APP_ID!,
     key: process.env.NEXT_PUBLIC_PUSHER_KEY!,
